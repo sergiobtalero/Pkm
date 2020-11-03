@@ -1,0 +1,51 @@
+name: Pokedex # The name of the App
+options: # Some general settings for the project
+  createIntermediateGroups: true # If the folders are nested, also nest the groups in Xcode
+  bundleIdPrefix: "com.sdbt"
+targets: # The List of our targets
+  Pokedex:
+    info: 
+      path: Config
+      UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+    type: application
+    platform: iOS
+    deploymentTarget: "14.0"
+    sources:
+      #Sources
+      - path: Pokedex
+  PokedexTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "14.0"
+    sources: 
+      - path: PokedexTests
+    dependencies:
+      - target: Pokedex
+  Data: 
+    type: framework
+    platform: iOS
+    deploymentTarget: "14.0"
+    sources: 
+      - path: Data
+  DataTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: DataTests
+    dependencies:
+      - target: Data
+  Domain:
+    type: framework
+    platform: iOS
+    deploymentTarget: "14.0"
+    sources: 
+      - path: Domain
+  DomainTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: DomainTests
+    dependencies:
+      - target: Domain
