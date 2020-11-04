@@ -4,9 +4,6 @@ options: # Some general settings for the project
   bundleIdPrefix: "com.sdbt"
 targets: # The List of our targets
   Pokedex:
-    info: 
-      path: Config
-      UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
     type: application
     platform: iOS
     deploymentTarget: "14.0"
@@ -16,6 +13,9 @@ targets: # The List of our targets
     postCompileScripts:
       - path: Scripts/swiftlint.sh
         name: Run swiftlint
+    dependencies:
+      - target: Data
+      - target: Domain
   PokedexTests:
     type: bundle.unit-test
     platform: iOS
