@@ -21,16 +21,15 @@ public enum Result<Success, Failure: Error> {
   case failure(Failure)
 }
 
-public class APINetworkSession {
-    let session: URLSession
-    let baseURL: String
+public protocol ServiceContract {
+    var session: URLSession { get }
+    var baseURL: String { get }
+    var urlRequest: URLRequest? { get }
     
-    public init(session: URLSession = URLSession.shared,
-                baseURL: String) {
-        self.session = session
-        self.baseURL = baseURL
-    }
-    
+    func execute<T: Codable>(completion: @escaping (Result<T?, Error>) -> Void)
+}
+
+extension ServiceContract {
     public func execute<T: Codable>(completion: @escaping (Result<T?, Error>) -> Void) {
         guard let url = URL(string: baseURL) else {
             completion(.failure(APINetworkError.invalidURL))
@@ -50,5 +49,20 @@ public class APINetworkSession {
             completion(.success(objects))
         }
         task.resume()
+    }
+}
+
+public class APINetworkSession: ServiceContract {
+    public let session: URLSession
+    public let baseURL: String
+    
+    public var urlRequest: URLRequest? {
+        return nil
+    }
+    
+    public init(session: URLSession = URLSession.shared,
+                baseURL: String) {
+        self.session = session
+        self.baseURL = baseURL
     }
 }
