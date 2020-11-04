@@ -13,11 +13,14 @@ targets: # The List of our targets
     sources:
       #Sources
       - path: Pokedex
+    postCompileScripts:
+      - path: Scripts/swiftlint.sh
+        name: Run swiftlint
   PokedexTests:
     type: bundle.unit-test
     platform: iOS
     deploymentTarget: "14.0"
-    sources: 
+    sources:
       - path: PokedexTests
     dependencies:
       - target: Pokedex
@@ -27,6 +30,9 @@ targets: # The List of our targets
     deploymentTarget: "14.0"
     sources: 
       - path: Data
+    postCompileScripts:
+      - path: Scripts/swiftlint.sh
+        name: Run swiftlint
   DataTests:
     type: bundle.unit-test
     platform: iOS
@@ -41,6 +47,9 @@ targets: # The List of our targets
     deploymentTarget: "14.0"
     sources: 
       - path: Domain
+    postCompileScripts:
+      - path: Scripts/swiftlint.sh
+        name: Run swiftlint
   DomainTests:
     type: bundle.unit-test
     platform: iOS
