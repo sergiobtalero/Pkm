@@ -33,6 +33,8 @@ targets: # The List of our targets
     postCompileScripts:
       - path: Scripts/swiftlint.sh
         name: Run swiftlint
+    dependencies:
+      - target: Domain
   DataTests:
     type: bundle.unit-test
     platform: iOS

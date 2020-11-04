@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import Domain
 
-public struct PokedexEntity: Codable {
-    let name: String
-    let url: String
+public struct PokedexEntity: DataEntity {
+    public let name: String
+    public let url: String
     
-    private enum CodingKeys: String, CodingKey {
-        case name
-        case url
+    func toDomain() throws -> Pokedex {
+        Pokedex(name: self.name,
+                url: URL(string: self.url))
     }
 }
