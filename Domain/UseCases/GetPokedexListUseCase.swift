@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol GetPokedexListUseCaseContract {
+public protocol GetPokedexListUseCaseContract {
     func execute(completion: @escaping ([Pokedex]?) -> Void)
 }
 
@@ -20,7 +20,7 @@ public final class GetPokedexListUseCase {
 }
 
 extension GetPokedexListUseCase: GetPokedexListUseCaseContract {
-    func execute(completion: @escaping ([Pokedex]?) -> Void) {
+    public func execute(completion: @escaping ([Pokedex]?) -> Void) {
         provider.getPokedexList { list in
             completion(list)
         }
