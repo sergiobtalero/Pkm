@@ -9,7 +9,7 @@ import Foundation
 
 typealias URLSessionResponse = (Data?, URLResponse?, Error?) -> Void
 
-enum APINetworkError: Error {
+public enum APINetworkError: Error {
     case invalidURL
     case badResponse
     case invalidData
