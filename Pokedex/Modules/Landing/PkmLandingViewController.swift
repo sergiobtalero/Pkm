@@ -12,14 +12,5 @@ class PkmLandingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Welcome Sergio")
-        let session = APINetworkSession(baseURL: "https://pokeapi.co/api/v2/pokedex")
-        session.execute { (result: Result<RawServerResponse<PokedexEntity>?, Error>) in
-            switch result {
-            case let .success(entities):
-                print(entities)
-            case let .failure(error):
-                print(error.localizedDescription)
-            }
-        }
     }
 }

@@ -8,7 +8,7 @@
 @testable import Data
 import XCTest
 
-class PokedexTests: XCTestCase {
+class PokedexServiceTests: XCTestCase {
     func testPokedexEntityParserSuccess() {
         let bundle = Bundle(for: type(of: self))
         guard let url = bundle.url(forResource: "Pokedex", withExtension: "json") else {
@@ -35,11 +35,10 @@ class PokedexTests: XCTestCase {
             XCTFail("Could not load data")
             return
         }
+        let urlSession = MockURLSession(data: data, response: nil, error: nil)
         
         // THEN
-        let baseURL = "https://pokeapi.co/api/v2/pokedex"
-        let urlSsession = MockURLSession(data: data, response: nil, error: nil)
-        APINetworkSession(session: urlSsession, baseURL: baseURL).execute { (result: Result<RawServerResponse<PokedexEntity>?, Error>) in
+        PokedexService.list.execute(session: urlSession) { (result: Result<RawServerResponse<PokedexEntity>?, Error>) in
             if case let (.success(response)) = result,
                let pokedexes = response?.results {
                 XCTAssertEqual(pokedexes.first!.name, "national")
@@ -56,11 +55,10 @@ class PokedexTests: XCTestCase {
     func testGetListOfPokedexesFail() {
         // GIVEN
         let expectation = XCTestExpectation(description: "Error fetching pokedexes")
-        let baseURL = "https://pokeapi.co/api/v2/pokedex"
         let urlSession = MockURLSession(data: nil, response: nil, error: APINetworkError.badResponse)
         
         // THEN
-        APINetworkSession(session: urlSession, baseURL: baseURL).execute { (result: Result<RawServerResponse<PokedexEntity>?, Error>) in
+        PokedexService.list.execute(session: urlSession) { (result: Result<RawServerResponse<PokedexEntity>?, Error>) in
             if case let(.failure(error)) = result,
                let err = error as? APINetworkError {
                 XCTAssertEqual(err, .badResponse)

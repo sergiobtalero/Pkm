@@ -1,8 +1,8 @@
 //
-//  APINetworkSession.swift
+//  ServiceContract.swift
 //  Data
 //
-//  Created by Sergio David Bravo Talero on 3/11/20.
+//  Created by Sergio David Bravo Talero on 5/11/20.
 //
 
 import Foundation
@@ -13,6 +13,7 @@ public enum APINetworkError: Error {
     case invalidURL
     case badResponse
     case invalidData
+    case invalidRequest
 }
 
 @frozen
@@ -22,21 +23,23 @@ public enum Result<Success, Failure: Error> {
 }
 
 public protocol ServiceContract {
-    var session: URLSession { get }
     var baseURL: String { get }
     var urlRequest: URLRequest? { get }
+    var path: String? { get }
     
-    func execute<T: Codable>(completion: @escaping (Result<T?, Error>) -> Void)
+    func execute<T: Codable>(session: URLSession,
+                             completion: @escaping (Result<T?, Error>) -> Void)
 }
 
 extension ServiceContract {
-    public func execute<T: Codable>(completion: @escaping (Result<T?, Error>) -> Void) {
-        guard let url = URL(string: baseURL) else {
-            completion(.failure(APINetworkError.invalidURL))
+    public func execute<T: Codable>(session: URLSession = URLSession.shared,
+                                    completion: @escaping (Result<T?, Error>) -> Void) {
+        guard let request = urlRequest else {
+            completion(.failure(APINetworkError.invalidRequest))
             return
         }
         
-        let task = session.dataTask(with: url) { (data, _, error) in
+        let task = session.dataTask(with: request) { (data, _, error) in
             if error != nil {
                 completion(.failure(APINetworkError.badResponse))
                 return
@@ -49,20 +52,5 @@ extension ServiceContract {
             completion(.success(objects))
         }
         task.resume()
-    }
-}
-
-public class APINetworkSession: ServiceContract {
-    public let session: URLSession
-    public let baseURL: String
-    
-    public var urlRequest: URLRequest? {
-        return nil
-    }
-    
-    public init(session: URLSession = URLSession.shared,
-                baseURL: String) {
-        self.session = session
-        self.baseURL = baseURL
     }
 }

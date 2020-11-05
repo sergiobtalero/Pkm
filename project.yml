@@ -14,7 +14,6 @@ targets: # The List of our targets
       - path: Scripts/swiftlint.sh
         name: Run swiftlint
     dependencies:
-      - target: Data
       - target: Domain
   PokedexTests:
     type: bundle.unit-test
