@@ -7,10 +7,10 @@
 
 import UIKit
 import Domain
+import Injector
 
 class PkmLandingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Welcome Sergio")
     }
 }
