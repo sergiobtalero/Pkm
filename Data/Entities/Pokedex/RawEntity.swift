@@ -8,7 +8,7 @@
 import Foundation
 import Domain
 
-public struct PokedexEntity: DataEntity {
+public struct RawEntity: DataEntity {
     public let name: String
     public let url: String
     

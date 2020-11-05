@@ -14,7 +14,7 @@ public final class PokedexProvider {
 
 extension PokedexProvider: PokedexProviderContract {
     public func getPokedexList(completion: @escaping ([Pokedex]?) -> Void) {
-        PokedexService.list.execute { (result: Result<RawServerResponse<PokedexEntity>?, Error>) in
+        PokedexService.list.execute { (result: Result<RawServerResponse<RawEntity>?, Error>) in
             if case let .success(response) = result,
                let entities = response?.results {
                 let models = entities.compactMap { try? $0.toDomain() }
