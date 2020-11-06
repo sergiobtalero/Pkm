@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Injector
 import UIKit
 
 final class PkmListViewBuilder {
@@ -25,8 +26,9 @@ final class PkmListViewBuilder {
         guard let pkmListVC = storyboard.instantiateInitialViewController() as? PkmListViewController else {
             fatalError("Could not allocate PkmListViewController")
         }
-        
-        pkmListVC.presenter = PkmListPresenter(view: pkmListVC)
+        let pokemonListUseCase = Injector.provideGetPokemonListUseCase()
+        pkmListVC.presenter = PkmListPresenter(view: pkmListVC,
+                                               getPokemonsListUseCase: pokemonListUseCase)
         
         if let tabTitle = tabTitle, let tabImage = tabImage {
             pkmListVC.tabBarItem.title = tabTitle

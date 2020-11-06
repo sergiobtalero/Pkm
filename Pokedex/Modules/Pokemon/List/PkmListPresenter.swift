@@ -6,16 +6,23 @@
 //
 
 import Foundation
+import Domain
 
 final class PkmListPresenter {
     private weak var view: PkmListViewContract?
+    private let getPokemonsListUseCase: GetPokemonsListUseCaseContract
     
-    init(view: PkmListViewContract) {
+    init(view: PkmListViewContract,
+         getPokemonsListUseCase: GetPokemonsListUseCaseContract) {
         self.view = view
+        self.getPokemonsListUseCase = getPokemonsListUseCase
     }
 }
 
 extension PkmListPresenter: PkmListPresenterContract {
     func fetchData() {
+        getPokemonsListUseCase.execute { pokemonList in
+            print(pokemonList)
+        }
     }
 }
