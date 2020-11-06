@@ -14,7 +14,7 @@ protocol PkmListContract {
 }
 
 protocol PkmListViewContract: AnyObject {
-    func renderPokemonList(_ list: [Pokemon])
+    func renderPokemonList(_ models: [PokemonCellViewModel])
 }
 
 protocol PkmListPresenterContract {

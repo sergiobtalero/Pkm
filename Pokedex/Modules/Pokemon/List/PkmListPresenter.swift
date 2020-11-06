@@ -9,9 +9,12 @@ import Foundation
 import Domain
 
 final class PkmListPresenter {
-    private weak var view: PkmListViewContract?
     private let getPokemonsListUseCase: GetPokemonsListUseCaseContract
     
+    private weak var view: PkmListViewContract?
+    private var pokemonList: [Pokemon] = []
+    
+    // MARK: - Initializer
     init(view: PkmListViewContract,
          getPokemonsListUseCase: GetPokemonsListUseCaseContract) {
         self.view = view
@@ -22,7 +25,21 @@ final class PkmListPresenter {
 extension PkmListPresenter: PkmListPresenterContract {
     func fetchData() {
         getPokemonsListUseCase.execute { [weak self] pokemonList in
-            self?.view?.renderPokemonList(pokemonList ?? [])
+            self?.pokemonList = pokemonList ?? []
+            self?.generateListViewModels()
         }
+    }
+}
+
+private extension PkmListPresenter {
+    func generateListViewModels() {
+        let viewModels = pokemonList.map { pkm -> PokemonCellViewModel in
+            let sprites = pkm.sprites
+            let imageURL = sprites?.otherSprite?.officialArtwork?.frontDefault ?? sprites?.frontDefault ?? ""
+            return PokemonCellViewModel(imageURL: URL(string: imageURL),
+                                        name: pkm.name,
+                                        number: "\(pkm.id)")
+        }
+        view?.renderPokemonList(viewModels)
     }
 }

@@ -8,12 +8,15 @@
 import Domain
 import UIKit
 
+struct PkmListViewModel {
+    var pokemonList: [PokemonCellViewModel] = []
+}
+
 final class PkmListViewController: UIViewController {
     // MARK: - Properties and IBOutlets
     @IBOutlet private weak var tableView: UITableView!
     
-    private var list: [Pokemon] = []
-    
+    private var viewModel = PkmListViewModel()
     var presenter: PkmListPresenterContract?
     
     // MARK: - Life Cycle
@@ -35,24 +38,18 @@ private extension PkmListViewController {
 
 // MARK: - PkmListViewContract
 extension PkmListViewController: PkmListViewContract {
-    func renderPokemonList(_ list: [Pokemon]) {
-        self.list = list
+    func renderPokemonList(_ models: [PokemonCellViewModel]) {
+        viewModel.pokemonList.append(contentsOf: models)
         tableView.reloadData()
     }
 }
 
 extension PkmListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return list.count
+        return viewModel.pokemonList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let pokemon = list[indexPath.row]
-        let sprites = pokemon.sprites
-        let imageURL = sprites?.otherSprite?.officialArtwork?.frontDefault ?? sprites?.frontDefault ?? ""
-        let viewModel = PokemonCellViewModel(imageURL: URL(string: imageURL),
-                                             name: pokemon.name,
-                                             number: "\(pokemon.id)")
-        return viewModel.fill(on: tableView)
+        return viewModel.pokemonList[indexPath.row].fill(on: tableView)
     }
 }
