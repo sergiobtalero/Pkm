@@ -9,6 +9,22 @@
 import XCTest
 
 class PokemonServiceTests: XCTestCase {
+    func testParserOfPokemonJSONSuccess() {
+        let bundle = Bundle(for: type(of: self))
+        guard let url = bundle.url(forResource: "Bulbasaur", withExtension: "json") else {
+            XCTFail("Could not load json file")
+            return
+        }
+        do {
+            let data = try Data(contentsOf: url)
+            let pokemon = try JSONDecoder().decode(PokemonEntity.self, from: data)
+            XCTAssertEqual(pokemon.name, "bulbasaur")
+        } catch {
+            XCTFail("Could not decode PokedexEntity")
+        }
+        XCTAssert(true)
+    }
+    
     func testGetListOfPokemonSuccess() {
         // GIVEN
         let expectation = XCTestExpectation(description: "Retrieve list of pokedexes")
@@ -51,7 +67,6 @@ class PokemonServiceTests: XCTestCase {
 
 private extension PokemonServiceTests {
     func getPokemonListData() -> Data? {
-        let expectation = XCTestExpectation(description: "Retrieve list of pokemons")
         let bundle = Bundle(for: type(of: self))
         guard let url = bundle.url(forResource: "PokemonList", withExtension: "json"),
               let data = try? Data(contentsOf: url) else {
