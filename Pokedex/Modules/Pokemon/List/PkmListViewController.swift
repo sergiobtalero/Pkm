@@ -76,6 +76,7 @@ extension PkmListViewController: UISearchResultsUpdating {
     }
 }
 
+// MARK: - UISearchControllerDelegate
 extension PkmListViewController: UISearchControllerDelegate {
     func didDismissSearchController(_ searchController: UISearchController) {
         presenter?.userDidCancelSearch()
