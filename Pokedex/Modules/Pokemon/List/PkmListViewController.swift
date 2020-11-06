@@ -48,7 +48,9 @@ extension PkmListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let pokemon = list[indexPath.row]
-        let viewModel = PokemonCellViewModel(imageURL: URL(string: pokemon.sprites?.frontDefault ?? ""),
+        let sprites = pokemon.sprites
+        let imageURL = sprites?.otherSprite?.officialArtwork?.frontDefault ?? sprites?.frontDefault ?? ""
+        let viewModel = PokemonCellViewModel(imageURL: URL(string: imageURL),
                                              name: pokemon.name,
                                              number: "\(pokemon.id)")
         return viewModel.fill(on: tableView)

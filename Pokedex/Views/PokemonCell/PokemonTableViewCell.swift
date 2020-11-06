@@ -5,6 +5,7 @@
 //  Created by Sergio David Bravo Talero on 5/11/20.
 //
 
+import Kingfisher
 import UIKit
 
 struct PokemonCellViewModel {
@@ -23,12 +24,16 @@ struct PokemonCellViewModel {
 }
 
 final class PokemonTableViewCell: UITableViewCell {
+    private enum Constants {
+        static let number = "No: "
+    }
     @IBOutlet weak private var pokemonImage: UIImageView!
     @IBOutlet weak private var pokemonNameLabel: UILabel!
     @IBOutlet weak private var pokemonNumberLabel: UILabel!
    
     func setup(with viewModel: PokemonCellViewModel) {
-        pokemonNameLabel.text = viewModel.name
-        pokemonNumberLabel.text = viewModel.number
+        pokemonImage.kf.setImage(with: viewModel.imageURL)
+        pokemonNameLabel.text = viewModel.name.capitalized
+        pokemonNumberLabel.text = Constants.number + viewModel.number
     }
 }

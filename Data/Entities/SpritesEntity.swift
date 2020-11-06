@@ -17,6 +17,7 @@ struct SpritesEntity: DataEntity {
     let frontFemale: String?
     let frontShiny: String?
     let frontShinyFemale: String?
+    let otherSprites: OtherSpriteEntity?
 
     enum CodingKeys: String, CodingKey {
         case backDefault = "back_default"
@@ -27,24 +28,7 @@ struct SpritesEntity: DataEntity {
         case frontFemale = "front_female"
         case frontShiny = "front_shiny"
         case frontShinyFemale = "front_shiny_female"
-    }
-
-    init(backDefault: String?,
-         backFemale: String?,
-         backShiny: String?,
-         backShinyFemale: String?,
-         frontDefault: String?,
-         frontFemale: String?,
-         frontShiny: String?,
-         frontShinyFemale: String?) {
-        self.backDefault = backDefault
-        self.backFemale = backFemale
-        self.backShiny = backShiny
-        self.backShinyFemale = backShinyFemale
-        self.frontDefault = frontDefault
-        self.frontFemale = frontFemale
-        self.frontShiny = frontShiny
-        self.frontShinyFemale = frontShinyFemale
+        case otherSprites = "other"
     }
     
     func toDomain() throws -> Sprites {
@@ -55,6 +39,52 @@ struct SpritesEntity: DataEntity {
                 frontDefault: frontDefault,
                 frontFemale: frontFemale,
                 frontShiny: frontShiny,
-                frontShinyFemale: frontShinyFemale)
+                frontShinyFemale: frontShinyFemale,
+                otherSprite: try? self.otherSprites?.toDomain())
+    }
+}
+
+// MARK: - Other
+struct OtherSpriteEntity: DataEntity {
+    public let dreamWorld: DreamWorldEntity
+    public let officialArtwork: OfficialArtworkEntity
+
+    enum CodingKeys: String, CodingKey {
+        case dreamWorld = "dream_world"
+        case officialArtwork = "official-artwork"
+    }
+    
+    func toDomain() throws -> OtherSprite {
+        OtherSprite(dreamWorld: try? self.dreamWorld.toDomain(),
+                    officialArtwork: try? self.officialArtwork.toDomain())
+    }
+}
+
+// MARK: - DreamWorld
+struct DreamWorldEntity: DataEntity {
+    public let frontDefault: String?
+    public let frontFemale: String?
+
+    enum CodingKeys: String, CodingKey {
+        case frontDefault = "front_default"
+        case frontFemale = "front_female"
+    }
+    
+    func toDomain() throws -> DreamWorldSprite {
+        DreamWorldSprite(frontDefault: self.frontDefault,
+                         frontFemale: self.frontFemale)
+    }
+}
+
+// MARK: - OfficialArtwork
+struct OfficialArtworkEntity: DataEntity {
+    public let frontDefault: String?
+
+    enum CodingKeys: String, CodingKey {
+        case frontDefault = "front_default"
+    }
+    
+    func toDomain() throws -> OfficialArtworkSprite {
+        OfficialArtworkSprite(frontDefault: self.frontDefault)
     }
 }

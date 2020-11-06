@@ -2,6 +2,10 @@ name: Pokedex # The name of the App
 options: # Some general settings for the project
   createIntermediateGroups: true # If the folders are nested, also nest the groups in Xcode
   bundleIdPrefix: "com.sdbt"
+packages:
+  Kingfisher:
+    url: https://github.com/onevcat/Kingfisher.git
+    from: 5.8.0
 targets: # The List of our targets
   Pokedex:
     type: application
@@ -16,6 +20,7 @@ targets: # The List of our targets
     dependencies:
       - target: Domain
       - target: Injector
+      - package: Kingfisher
   PokedexTests:
     type: bundle.unit-test
     platform: iOS

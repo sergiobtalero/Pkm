@@ -16,6 +16,7 @@ public struct Sprites {
     public let frontFemale: String?
     public let frontShiny: String?
     public let frontShinyFemale: String?
+    public let otherSprite: OtherSprite?
 
     public init(backDefault: String?,
                 backFemale: String?,
@@ -24,7 +25,8 @@ public struct Sprites {
                 frontDefault: String?,
                 frontFemale: String?,
                 frontShiny: String?,
-                frontShinyFemale: String?) {
+                frontShinyFemale: String?,
+                otherSprite: OtherSprite?) {
         self.backDefault = backDefault
         self.backFemale = backFemale
         self.backShiny = backShiny
@@ -33,5 +35,38 @@ public struct Sprites {
         self.frontFemale = frontFemale
         self.frontShiny = frontShiny
         self.frontShinyFemale = frontShinyFemale
+        self.otherSprite = otherSprite
+    }
+}
+
+public struct OtherSprite {
+    public let dreamWorld: DreamWorldSprite?
+    public let officialArtwork: OfficialArtworkSprite?
+    
+    public init(dreamWorld: DreamWorldSprite?,
+                officialArtwork: OfficialArtworkSprite?) {
+        self.dreamWorld = dreamWorld
+        self.officialArtwork = officialArtwork
+    }
+}
+
+// MARK: - DreamWorld
+public struct DreamWorldSprite {
+    public let frontDefault: String?
+    public let frontFemale: String?
+    
+    public init(frontDefault: String?,
+                frontFemale: String?) {
+        self.frontDefault = frontDefault
+        self.frontFemale = frontFemale
+    }
+}
+
+// MARK: - OfficialArtwork
+public struct OfficialArtworkSprite {
+    public let frontDefault: String?
+    
+    public init(frontDefault: String?) {
+        self.frontDefault = frontDefault
     }
 }
