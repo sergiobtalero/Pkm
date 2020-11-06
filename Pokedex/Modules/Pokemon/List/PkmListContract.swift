@@ -19,4 +19,6 @@ protocol PkmListViewContract: AnyObject {
 
 protocol PkmListPresenterContract {
     func fetchData()
+    func searchPokemon(with name: String)
+    func userDidCancelSearch()
 }

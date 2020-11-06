@@ -15,6 +15,7 @@ struct PkmListViewModel {
 final class PkmListViewController: UIViewController {
     // MARK: - Properties and IBOutlets
     @IBOutlet private weak var tableView: UITableView!
+    private var searchController: UISearchController?
     
     private var viewModel = PkmListViewModel()
     var presenter: PkmListPresenterContract?
@@ -24,6 +25,7 @@ final class PkmListViewController: UIViewController {
         super.viewDidLoad()
         presenter?.fetchData()
         setupTable()
+        setupSearchBar()
     }
 }
 
@@ -34,16 +36,26 @@ private extension PkmListViewController {
         tableView.dataSource = self
         tableView.estimatedRowHeight = 75.0
     }
+    
+    func setupSearchBar() {
+        searchController = UISearchController(searchResultsController: nil)
+        searchController?.delegate = self
+        searchController?.searchResultsUpdater = self
+        searchController?.obscuresBackgroundDuringPresentation = false
+        searchController?.searchBar.placeholder = "Search"
+        navigationItem.searchController = searchController
+    }
 }
 
 // MARK: - PkmListViewContract
 extension PkmListViewController: PkmListViewContract {
     func renderPokemonList(_ models: [PokemonCellViewModel]) {
-        viewModel.pokemonList.append(contentsOf: models)
+        viewModel.pokemonList = models
         tableView.reloadData()
     }
 }
 
+// MARK: - UITableViewDataSource
 extension PkmListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.pokemonList.count
@@ -51,5 +63,21 @@ extension PkmListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return viewModel.pokemonList[indexPath.row].fill(on: tableView)
+    }
+}
+
+// MARK: - UISearchResultsUpdating
+extension PkmListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text else {
+            return
+        }
+        presenter?.searchPokemon(with: text)
+    }
+}
+
+extension PkmListViewController: UISearchControllerDelegate {
+    func didDismissSearchController(_ searchController: UISearchController) {
+        presenter?.userDidCancelSearch()
     }
 }

@@ -27,14 +27,26 @@ extension PkmListPresenter: PkmListPresenterContract {
     func fetchData() {
         getPokemonsListUseCase.execute { [weak self] pokemonList in
             self?.pokemonList = pokemonList ?? []
-            self?.generateListViewModels()
+            let viewModels = self?.generateListViewModels(with: pokemonList ?? [])
+            self?.view?.renderPokemonList(viewModels ?? [])
         }
+    }
+    
+    func searchPokemon(with name: String) {
+        let matches = pokemonList.filter { $0.name.lowercased().contains(name.lowercased()) }
+        let viewModels = generateListViewModels(with: matches)
+        view?.renderPokemonList(viewModels)
+    }
+    
+    func userDidCancelSearch() {
+        let viewModels = generateListViewModels(with: pokemonList)
+        view?.renderPokemonList(viewModels)
     }
 }
 
 private extension PkmListPresenter {
-    func generateListViewModels() {
-        let viewModels = pokemonList.map { pkm -> PokemonCellViewModel in
+    func generateListViewModels(with pokemon: [Pokemon]) -> [PokemonCellViewModel] {
+        return pokemon.map { pkm -> PokemonCellViewModel in
             let sprites = pkm.sprites
             let imageURL = sprites?.otherSprite?.officialArtwork?.frontDefault ?? sprites?.frontDefault ?? ""
             let types = pkm.types?.compactMap { $0.type?.name.capitalized }
@@ -43,6 +55,5 @@ private extension PkmListPresenter {
                                         number: "\(pkm.id)",
                                         types: types ?? [])
         }
-        view?.renderPokemonList(viewModels)
     }
 }
