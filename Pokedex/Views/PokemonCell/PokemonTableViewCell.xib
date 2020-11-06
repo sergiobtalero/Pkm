@@ -40,10 +40,11 @@
                             </label>
                         </subviews>
                     </stackView>
-                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hak-kY-QQ7">
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hak-kY-QQ7">
                         <rect key="frame" x="270" y="15" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="a2k-xz-OuB"/>
+                            <constraint firstAttribute="width" constant="40" placeholder="YES" id="dRf-RF-WYK"/>
                         </constraints>
                     </stackView>
                 </subviews>
@@ -65,7 +66,7 @@
                 <outlet property="pokemonNumberLabel" destination="KfS-Lz-hIC" id="ixr-yM-JIG"/>
                 <outlet property="typesStackView" destination="hak-kY-QQ7" id="bDs-aj-yDg"/>
             </connections>
-            <point key="canvasLocation" x="139" y="119"/>
+            <point key="canvasLocation" x="137.68115942028987" y="118.86160714285714"/>
         </tableViewCell>
     </objects>
 </document>
