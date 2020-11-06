@@ -28,6 +28,7 @@ final class PokemonTableViewCell: UITableViewCell {
     private enum Constants {
         static let number = "No: "
     }
+    
     @IBOutlet weak private var pokemonImage: UIImageView!
     @IBOutlet weak private var pokemonNameLabel: UILabel!
     @IBOutlet weak private var pokemonNumberLabel: UILabel!
@@ -38,7 +39,7 @@ final class PokemonTableViewCell: UITableViewCell {
         pokemonNameLabel.text = viewModel.name.capitalized
         pokemonNumberLabel.text = Constants.number + viewModel.number
         
-        typesStackView.arrangedSubviews.map { typesStackView.removeArrangedSubview($0) }
+        typesStackView.arrangedSubviews.forEach { typesStackView.removeArrangedSubview($0) }
         viewModel.types.forEach {
             let imageView = UIImageView(frame: .zero)
             imageView.image = UIImage(named: $0)
