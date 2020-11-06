@@ -15,7 +15,7 @@ class GetPokemonsListUseCaseTests: XCTestCase {
         let pokemon = getPokemonList()
         let provider = PokemonProviderMock()
         provider.pokemon = pokemon
-        let useCase = GetPokemonsListUseCaseMock(provider:  provider)
+        let useCase = GetPokemonsListUseCase(provider:  provider)
         
         // THEN
         useCase.execute { list in
@@ -31,7 +31,7 @@ class GetPokemonsListUseCaseTests: XCTestCase {
     func testFetchListEmpty() {
         // GIVEN
         let provider = PokemonProviderMock()
-        let useCase = GetPokemonsListUseCaseMock(provider:  provider)
+        let useCase = GetPokemonsListUseCase(provider:  provider)
         
         // THEN
         useCase.execute { list in
