@@ -7,6 +7,7 @@
 
 import Foundation
 import Domain
+import UIKit
 
 final class PkmListPresenter {
     private let getPokemonsListUseCase: GetPokemonsListUseCaseContract
@@ -36,9 +37,11 @@ private extension PkmListPresenter {
         let viewModels = pokemonList.map { pkm -> PokemonCellViewModel in
             let sprites = pkm.sprites
             let imageURL = sprites?.otherSprite?.officialArtwork?.frontDefault ?? sprites?.frontDefault ?? ""
+            let types = pkm.types?.compactMap { $0.type?.name.capitalized }
             return PokemonCellViewModel(imageURL: URL(string: imageURL),
                                         name: pkm.name,
-                                        number: "\(pkm.id)")
+                                        number: "\(pkm.id)",
+                                        types: types ?? [])
         }
         view?.renderPokemonList(viewModels)
     }

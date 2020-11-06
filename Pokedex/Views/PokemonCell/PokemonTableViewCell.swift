@@ -12,6 +12,7 @@ struct PokemonCellViewModel {
     let imageURL: URL?
     let name: String
     let number: String
+    let types: [String]
     
     func fill(on tableView: UITableView) -> UITableViewCell {
         guard let cell = tableView
@@ -30,10 +31,18 @@ final class PokemonTableViewCell: UITableViewCell {
     @IBOutlet weak private var pokemonImage: UIImageView!
     @IBOutlet weak private var pokemonNameLabel: UILabel!
     @IBOutlet weak private var pokemonNumberLabel: UILabel!
-   
+    @IBOutlet weak var typesStackView: UIStackView!
+    
     func setup(with viewModel: PokemonCellViewModel) {
         pokemonImage.kf.setImage(with: viewModel.imageURL)
         pokemonNameLabel.text = viewModel.name.capitalized
         pokemonNumberLabel.text = Constants.number + viewModel.number
+        
+        typesStackView.arrangedSubviews.map { typesStackView.removeArrangedSubview($0) }
+        viewModel.types.forEach {
+            let imageView = UIImageView(frame: .zero)
+            imageView.image = UIImage(named: $0)
+            typesStackView.addArrangedSubview(imageView)
+        }
     }
 }

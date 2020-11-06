@@ -40,6 +40,12 @@
                             </label>
                         </subviews>
                     </stackView>
+                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hak-kY-QQ7">
+                        <rect key="frame" x="270" y="15" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="a2k-xz-OuB"/>
+                        </constraints>
+                    </stackView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="n9I-xH-OXP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="H3T-8q-emM"/>
@@ -47,7 +53,9 @@
                     <constraint firstItem="n9I-xH-OXP" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Tsh-ai-BkB"/>
                     <constraint firstItem="Ye9-5I-MVN" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="TtS-kG-arM"/>
                     <constraint firstItem="Ye9-5I-MVN" firstAttribute="leading" secondItem="n9I-xH-OXP" secondAttribute="trailing" constant="13" id="eXp-bo-X6W"/>
+                    <constraint firstItem="hak-kY-QQ7" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="glh-dZ-B36"/>
                     <constraint firstItem="n9I-xH-OXP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="qAY-GU-wRg"/>
+                    <constraint firstAttribute="trailing" secondItem="hak-kY-QQ7" secondAttribute="trailing" constant="10" id="rEC-Xq-NYf"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -55,6 +63,7 @@
                 <outlet property="pokemonImage" destination="n9I-xH-OXP" id="AyL-Ne-9UD"/>
                 <outlet property="pokemonNameLabel" destination="t1W-Vd-GeU" id="twI-u7-8mk"/>
                 <outlet property="pokemonNumberLabel" destination="KfS-Lz-hIC" id="ixr-yM-JIG"/>
+                <outlet property="typesStackView" destination="hak-kY-QQ7" id="bDs-aj-yDg"/>
             </connections>
             <point key="canvasLocation" x="139" y="119"/>
         </tableViewCell>

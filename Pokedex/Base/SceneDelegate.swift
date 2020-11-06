@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let pkmListBuilder = PkmListViewBuilder()
         pkmListBuilder.setTabTitle("Pokemon")
-        pkmListBuilder.setTabImage(UIImage(named: "Pkm")!)
+        pkmListBuilder.setTabImage(UIImage.ToolBar.pkm!)
         let pkmListNavVC = UINavigationController(rootViewController: pkmListBuilder.build())
         viewControllers.append(pkmListNavVC)
         
