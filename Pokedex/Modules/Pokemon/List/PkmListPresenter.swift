@@ -21,8 +21,8 @@ final class PkmListPresenter {
 
 extension PkmListPresenter: PkmListPresenterContract {
     func fetchData() {
-        getPokemonsListUseCase.execute { pokemonList in
-            print(pokemonList)
+        getPokemonsListUseCase.execute { [weak self] pokemonList in
+            self?.view?.renderPokemonList(pokemonList ?? [])
         }
     }
 }

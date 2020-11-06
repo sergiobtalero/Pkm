@@ -22,7 +22,9 @@ public final class GetPokemonsListUseCase {
 extension GetPokemonsListUseCase: GetPokemonsListUseCaseContract {
     public func execute(completion: @escaping ([Pokemon]?) -> Void) {
         provider.getPokemonList { pokemonsList in
-            completion(pokemonsList)
+            DispatchQueue.main.async {
+                completion(pokemonsList)
+            }
         }
     }
 }

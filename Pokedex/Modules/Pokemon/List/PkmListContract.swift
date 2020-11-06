@@ -6,13 +6,16 @@
 //
 
 import Foundation
+import Domain
 
 protocol PkmListContract {
     typealias View = PkmListViewContract
     typealias Presenter = PkmListPresenterContract
 }
 
-protocol PkmListViewContract: AnyObject {}
+protocol PkmListViewContract: AnyObject {
+    func renderPokemonList(_ list: [Pokemon])
+}
 
 protocol PkmListPresenterContract {
     func fetchData()
