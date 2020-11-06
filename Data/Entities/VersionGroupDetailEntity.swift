@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import Domain
 
-struct VersionGroupDetailEntity: Codable {
+struct VersionGroupDetailEntity: DataEntity {
     let levelLearnedAt: Int
     let moveLearnMethod, versionGroup: SpeciesEntity
 
@@ -15,5 +16,11 @@ struct VersionGroupDetailEntity: Codable {
         case levelLearnedAt = "level_learned_at"
         case moveLearnMethod = "move_learn_method"
         case versionGroup = "version_group"
+    }
+    
+    func toDomain() throws -> VersionGroupDetail {
+        VersionGroupDetail(levelLearnedAt: self.levelLearnedAt,
+                           moveLearnMethod: try? self.moveLearnMethod.toDomain(),
+                           versionGroup: try? self.versionGroup.toDomain())
     }
 }

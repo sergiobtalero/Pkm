@@ -6,13 +6,20 @@
 //
 
 import Foundation
+import Domain
 
-struct StatEntity: Codable {
+struct StatEntity: DataEntity {
     let baseStat, effort: Int
     let stat: SpeciesEntity
 
     enum CodingKeys: String, CodingKey {
         case baseStat = "base_stat"
         case effort, stat
+    }
+    
+    func toDomain() throws -> Stat {
+        Stat(baseStat: self.baseStat,
+             effort: self.effort,
+             stat: try? self.stat.toDomain())
     }
 }

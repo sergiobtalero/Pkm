@@ -6,8 +6,14 @@
 //
 
 import Foundation
+import Domain
 
-struct TypeElement: Codable {
+struct TypeElemenEntity: DataEntity {
     let slot: Int
     let type: SpeciesEntity
+    
+    func toDomain() throws -> TypeElement {
+        TypeElement(slot: self.slot,
+                    type: try? self.type.toDomain())
+    }
 }

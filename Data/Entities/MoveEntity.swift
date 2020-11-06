@@ -6,13 +6,19 @@
 //
 
 import Foundation
+import Domain
 
-struct MoveEntity: Codable {
+struct MoveEntity: DataEntity {
     let move: SpeciesEntity
     let versionGroupDetails: [VersionGroupDetailEntity]
 
     enum CodingKeys: String, CodingKey {
         case move
         case versionGroupDetails = "version_group_details"
+    }
+    
+    func toDomain() throws -> Move {
+        Move(move: try? self.move.toDomain(),
+             versionGroupDetails: try? self.versionGroupDetails.toDomain())
     }
 }

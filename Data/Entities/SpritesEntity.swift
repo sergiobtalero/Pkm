@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import Domain
 
-struct Sprites: Codable {
+struct SpritesEntity: DataEntity {
     let backDefault: String?
     let backFemale: String?
     let backShiny: String?
@@ -44,5 +45,16 @@ struct Sprites: Codable {
         self.frontFemale = frontFemale
         self.frontShiny = frontShiny
         self.frontShinyFemale = frontShinyFemale
+    }
+    
+    func toDomain() throws -> Sprites {
+        Sprites(backDefault: backDefault,
+                backFemale: backFemale,
+                backShiny: backShiny,
+                backShinyFemale: backShinyFemale,
+                frontDefault: frontDefault,
+                frontFemale: frontFemale,
+                frontShiny: frontShiny,
+                frontShinyFemale: frontShinyFemale)
     }
 }

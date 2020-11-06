@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import Domain
 
-struct AbilityEntity: Codable {
+struct AbilityEntity: DataEntity {
     let ability: SpeciesEntity
     let isHidden: Bool
     let slot: Int
@@ -16,5 +17,11 @@ struct AbilityEntity: Codable {
         case ability
         case isHidden = "is_hidden"
         case slot
+    }
+    
+    func toDomain() throws -> Ability {
+        Ability(ability: try? self.ability.toDomain(),
+                isHidden: self.isHidden,
+                slot: self.slot)
     }
 }

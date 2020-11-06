@@ -6,8 +6,14 @@
 //
 
 import Foundation
+import Domain
 
-struct SpeciesEntity: Codable {
+struct SpeciesEntity: DataEntity {
     let name: String
     let url: String
+    
+    func toDomain() throws -> Species {
+        Species(name: self.name,
+                url: self.url)
+    }
 }
